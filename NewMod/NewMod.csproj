@@ -1,0 +1,62 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>preview</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<BuildDir>$(SolutionDir)build/</BuildDir>
+		<TSPackageDir>$(BuildDir)/package/</TSPackageDir>
+		<TSPackagePluginDir>$(TSPackageDir)/plugins/$(SolutionName)/</TSPackagePluginDir>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="libs\**" />
+    <EmbeddedResource Remove="libs\**" />
+    <None Remove="libs\**" />
+    <None Remove="libs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BepInEx.Analyzers" Version="1.0.*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="BepInEx.Core" Version="5.4.21" />
+    <PackageReference Include="RiskOfRain2.GameLibs" Version="1.4.1-r.0" GeneratePathProperty="true"/>
+    <PackageReference Include="MMHOOK.RoR2" Version="2025.12.9" NoWarn="NU1701" />
+    <PackageReference Include="RoR2BepInExPack" Version="1.40.0" />
+    <PackageReference Include="UnityEngine.Modules" Version="2021.3.33" GeneratePathProperty="true" />
+  </ItemGroup>
+
+ <Target Name="BuildTSPackage" AfterTargets="Build">
+    <MakeDir Directories="$(TSPackageDir);$(TSPackagePluginDir)" />
+    <Copy SourceFiles="$(SolutionDir)manifest.json;$(SolutionDir)README.md;$(SolutionDir)CHANGELOG.md" DestinationFolder="$(TSPackageDir)" />
+
+    <Copy SourceFiles="$(BuildDir)icon.png" DestinationFolder="$(TSPackageDir)" ContinueOnError="true" />
+
+    <Delete Files="$(TSPackagePluginDir)/$(AssemblyName).dll" />
+    <Delete Files="$(TSPackagePluginDir)/$(AssemblyName).pdb" Condition="'$(Configuration)'=='Release'" ContinueOnError="true" />
+
+    <Copy SourceFiles="$(OutDir)$(AssemblyName).dll" DestinationFolder="$(TSPackagePluginDir)" />
+    <Copy SourceFiles="$(OutDir)$(AssemblyName).pdb" DestinationFolder="$(TSPackagePluginDir)" Condition="'$(Configuration)'=='Debug'" ContinueOnError="true" />
+
+    <Delete Files="$(TSPackagePluginDir)/$(AssemblyName).dll.mdb" ContinueOnError="true" />
+
+    <Delete Files="$(TSPackagePluginDir)/$(AssemblyName).pdb" ContinueOnError="true" />
+
+    <ZipDirectory SourceDirectory="$(TSPackageDir)" DestinationFile="$(BuildDir)/$(SolutionName).zip" Overwrite="true" />
+  </Target>
+
+</Project>
