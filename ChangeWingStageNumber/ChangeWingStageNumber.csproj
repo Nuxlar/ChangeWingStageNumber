@@ -38,6 +38,10 @@
     <PackageReference Include="MMHOOK.RoR2" Version="2025.12.9" NoWarn="NU1701" />
     <PackageReference Include="RoR2BepInExPack" Version="1.40.0" />
     <PackageReference Include="UnityEngine.Modules" Version="2021.3.33" GeneratePathProperty="true" />
+    <PackageReference Include="R2API.Core" Version="5.2.0" />
+		<PackageReference Include="R2API.ContentManagement" Version="1.0.10" />
+		<PackageReference Include="R2API.Prefab" Version="1.1.1" />
+		<PackageReference Include="R2API.Director" Version="2.3.7" />
   </ItemGroup>
 
  <Target Name="BuildTSPackage" AfterTargets="Build">

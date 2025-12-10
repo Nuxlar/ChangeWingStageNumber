@@ -1,7 +1,7 @@
 using BepInEx.Logging;
 using System.Runtime.CompilerServices;
 
-namespace NewMod
+namespace ChangeWingStageNumber
 {
     internal static class Log
     {
@@ -14,7 +14,7 @@ namespace NewMod
 
         static string getLogPrefix(string callerPath, string callerMemberName, int callerLineNumber)
         {
-            const string MOD_NAME = nameof(NewMod);
+            const string MOD_NAME = nameof(ChangeWingStageNumber);
 
             int modNameLastPathIndex = callerPath.LastIndexOf(MOD_NAME);
             if (modNameLastPathIndex >= 0)

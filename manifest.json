@@ -1,8 +1,8 @@
 ﻿{
-	"name": "NewMod",
+	"name": "ChangeWingStageNumber",
 	"version_number": "1.0.0",
 	"website_url": "",
-	"description": "Template",
+	"description": "Changes the Solus Wing interactable to spawn only on Stage 5. Configurable.",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2117",
 		"RiskofThunder-HookGenPatcher-1.2.4"
